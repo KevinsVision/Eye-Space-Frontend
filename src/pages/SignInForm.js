@@ -2,8 +2,20 @@ import React from 'react'
 import { Link } from "react-router-dom"
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import { FormGroup, FormControl, FormLabel } from "react-bootstrap"
+import { makeStyles } from '@material-ui/core/styles';
 
+// API
 import { signin } from '../services/api'
+
+
+const useStyles = makeStyles(theme => ({
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200
+  }
+}))
 
 class SignInForm extends React.Component {
   state = {
@@ -30,7 +42,8 @@ class SignInForm extends React.Component {
     const { handleChange, handleSubmit } = this
 
     return (
-      <div>
+      <div className="user-list">
+        <FormLabel>Username</FormLabel>
         <TextField
           id='usernameInput'
           label='Username'
@@ -40,6 +53,7 @@ class SignInForm extends React.Component {
           name='username'
         />
         <br />
+        <FormLabel>Password</FormLabel>
         <TextField
           id='passwordInput'
           label='Password'
@@ -56,7 +70,7 @@ class SignInForm extends React.Component {
         </Button>
         <br />
         <br />
-        <Button variant='contained' color='primary'><Link to="/">Go Back</Link></Button>
+        <Button variant='contained' color='primary'><Link to="/" className="user-list">Go Back</Link></Button>
         
       </div>
     )

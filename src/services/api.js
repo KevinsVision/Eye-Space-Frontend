@@ -1,6 +1,7 @@
 const baseUrl = 'http://localhost:3000'
 const signinUrl = baseUrl + '/signin'
 const signupUrl = baseUrl + '/signup'
+const newUserPlanetURL = baseUrl + '/user_planets'
 
 export function signin (username, password) {
 	return fetch(signinUrl, {
@@ -21,7 +22,7 @@ export function signup(username, password) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password })
-    }).then(resp => resp.json());
+    }).then(resp => resp.json())
 }
 
 export function getUserPlanets () {
@@ -36,7 +37,12 @@ export function getAllPlanets () {
     }).then(resp => resp.json())
 }
 
-window.getPlanets = getAllPlanets
-//   fetch("http://localhost:4000/planets").then(resp => resp.json()).then(planets => this.setState({planets: planets}));
+export function createUserPlanet( planetId ) {
+    return fetch(newUserPlanetURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", 'Authorization': localStorage.token },
+        body: JSON.stringify({ planetId })
+    }).then(resp => resp.json())
+}
 
-// export default { signin, validate, getuserplanets, signup };
+window.getPlanets = createUserPlanet

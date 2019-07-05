@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import { Route, Switch, withRouter } from 'react-router-dom'
 
+// PAGES
 import HomePage from './pages/HomePage'
 import Header from './pages/Header'
 import SignInForm from './pages/SignInForm'
 import Welcome from './pages/Welcome'
 import Signup from './pages/signup'
+
+// API
 import { validate } from './services/api'
 
 import './App.css'
@@ -47,7 +50,7 @@ class App extends Component {
       <div className="App">
         <Header username={username} signout={signout} />
         <Switch>
-        <Route exact path="/signup" component={props => <Signup {...props} signin={signin} />}/>
+          <Route exact path="/signup" component={props => <Signup {...props} signin={signin} />}/>
           <Route exact path='/' component={HomePage} />
           <Route path='/signin' component={props => <SignInForm signin={signin} {...props} />} />
           <Route path='/welcome' component={props => <Welcome username={username} {...props} />} />

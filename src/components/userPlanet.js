@@ -28,6 +28,10 @@ import FormLabel from '@material-ui/core/FormLabel';
 
 import CardMedia from '@material-ui/core/CardMedia';
 
+// Filter Selects
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 
 const styles = theme => ({
   card: {
@@ -56,9 +60,17 @@ const styles = theme => ({
 
 class UserPlanet extends React.Component {
   state = { 
-    expanded: true
+    expanded: true,
+    planets: []
   }
 
+  adoptPlanet = planetId => {
+    const planets = this.state.planets.map(planet => planet.id === planetId
+      ? {...planet, isAdopted: true}
+      : planet
+      )
+      this.setState({planets})
+  }
 
   // up = () => {
   //   if(this.props.planet.likes < 1) {
@@ -72,46 +84,40 @@ updateTheLikes = (planet) => {
     // pwhv.push(this.props.username)
     // pwhv.include(this.props.username) ? 
     const likes = planet.likes += 1
-
-  
   
   return fetch(`http://localhost:3000/planets/${planet.id}`, {
       method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Authorization': localStorage.token },
       body: JSON.stringify({likes})
   }).then(resp => resp.json())
 }
 
 addLikes = () => {
   this.updateTheLikes(this.props.planet)
+  .then(data => {
+    if (data.error) {
+      alert(data.error)
+    } else {
+      this.setState({ planets: data })
+    }
+  })
 }
 
-  handleExpandClick = () => {
-    this.setState(state => ({ expanded: !state.expanded }))
-  };
+componentDidMount () {
+  this.addLikes()
+}
 
-  // sortPlanets = (value) => {
-  //   const {planets} = this.props.planet
-  //   const sortedPlanets = planets.slice()
-  //   value === 'Alphabetically'
-  //   ? sortPlanets.sort((a,b) => (a.name > b.name) ? 1 : -1)
-  //   : sortPlanets.sort((a,b) => (a.distance > b.distance) ? 1 : -1)
-  //   this.setState({planets: sorttedPlanets})
-  // }
-
-  // sortStocks = (value) => {
-  //   const {stocks} = this.state
-  //   const sortedStocks = stocks.slice()
-  //   value === 'Alphabetically'
-  //     ? sortedStocks.sort((a,b) => (a.ticker > b.ticker) ? 1 : -1)
-  //     : sortedStocks.sort((a,b) => (a.price > b.price) ? 1 : -1)
-  //   this.setState({stocks: sortedStocks});
-  // }
+handleExpandClick = () => {
+  this.setState(state => ({ expanded: !state.expanded }))
+}
 
   render () {
-    const { classes, planet, handleSort } = this.props
+    const { classes, planet, handleSort, userPlanet } = this.props
+    const { planets } = this.state
+    const { adoptPlanet } = this
 
     return (
+      
       // <FormControl component="fieldset" className={classes.formControl}>
 
       //   <FormLabel component="legend">Sort Planets By</FormLabel>
@@ -142,16 +148,28 @@ addLikes = () => {
         <CardHeader
           avatar={
             <Avatar aria-label='Recipe' className={classes.avatar}>
-              {this.props.planet.likes}
+              { planets.likes }
             </Avatar>
           }
+
+
+//           id:
+//           1
+//           planet_id:
+//           4
+//           updated_at:
+//           "2019-07-01T19:31:05.972Z"
+//           user_id:
+//           1
+
+
           // action={
           //   <IconButton>
           //     <MoreVertIcon />
           //   </IconButton>
           // }
           title={planet.name}
-          subheader='June 28, 2019'
+          subheader='July 3, 2019'
         />
   
       <CardMedia
@@ -191,10 +209,16 @@ addLikes = () => {
               <li>Surface Temperature: {planet.temperature} ℃</li>
               <li>Moons: {planet.moons}</li>
             </ul>
-              
               <br />
-              <h2>Vote for which planet you would like us to visit first as humans?</h2>
-              <Button onClick={this.addLikes} planet={planet.planet_id}> Vote 👍🏻 </Button>
+              <h2>The More Votes You Give, The Greater The Chances Are!</h2>
+              <Button onClick={this.addLikes}> Vote 👍🏻 </Button>
+              {/* <div className="extra content">
+          {
+            planet.isAdopted
+              ? <button className="ui disabled button">Already adopted</button>
+              : <button onClick={() => adoptPlanet(planet.id)} className="ui primary button">Adopt pet</button>
+          }
+        </div> */}
             </Typography>
           </CardContent>
         </Collapse>

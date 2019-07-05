@@ -3,6 +3,7 @@ import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import { withRouter } from "react-router"
 
+// API
 import { signup } from "../services/api"
 
 class Signup extends Component {
@@ -47,7 +48,7 @@ class Signup extends Component {
 
   render() {
     return (
-      <div className="wrapper">
+      <div className="user-list">
         <div className="Login">
           <h1 className="logSignText">Please Sign Up</h1>
           <form onSubmit={this.handleSubmit}>
