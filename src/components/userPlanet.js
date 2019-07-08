@@ -33,6 +33,13 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
+// Routes
+import { Route, Switch, withRouter } from 'react-router-dom'
+
+// imports from child
+import Planet from '../pages/Planet'
+import { Link } from 'react-router-dom'
+
 const styles = theme => ({
   card: {
     maxWidth: 400
@@ -164,7 +171,7 @@ handleExpandClick = () => {
           //   </IconButton>
           // }
           title={planet.name}
-          subheader='July 3, 2019'
+          subheader='July 8, 2019'
         />
   
       <CardMedia
@@ -181,9 +188,12 @@ handleExpandClick = () => {
             <ShareIcon />
           </IconButton> 
           Save */}
-          <Button variant="contained" color="primary" href="#contained-buttons" className={classes.button}>
-        More Info
-      </Button>
+          {/* <Link to='/signin'>Signin</Link> */}
+          <Link to={`/planet/${planet.id}`} planet={planet => <Planet {...planet}/>}>
+            <Button variant="contained" color="primary" planet={planet => <Planet {...planet}/>} className={classes.button}>
+              More Info
+            </Button>
+          </Link>
           <IconButton
             className={classnames(classes.expand, {
               [classes.expandOpen]: this.state.expanded
@@ -220,9 +230,12 @@ handleExpandClick = () => {
             </Typography>
           </CardContent>
         </Collapse>
+        <Route exact path="/planet" planet={planet => <Planet {...planet}/>}/>
       </Card>
       // </FormControl>
+      
     )
+    
   }
 }
 

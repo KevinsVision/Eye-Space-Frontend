@@ -109,7 +109,7 @@ class Welcome extends React.Component {
 
     return (
       <div style={this.style} className='user-list'>
-        <iframe src="https://solarsystem.nasa.gov/gltf_embed/2375" width="50%" height="450px" frameborder="0" />
+        {/* <iframe src="https://solarsystem.nasa.gov/gltf_embed/2375" width="50%" height="450px" frameborder="0" /> */}
         <h3>Here's all the planets in our Solar System:</h3>
         <strong>Sort by:</strong>
       <label>

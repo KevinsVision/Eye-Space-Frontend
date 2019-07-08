@@ -7,6 +7,7 @@ import Header from './pages/Header'
 import SignInForm from './pages/SignInForm'
 import Welcome from './pages/Welcome'
 import Signup from './pages/signup'
+import Planet from './pages/Planet'
 
 // API
 import { validate } from './services/api'
@@ -53,7 +54,8 @@ class App extends Component {
           <Route exact path="/signup" component={props => <Signup {...props} signin={signin} />}/>
           <Route exact path='/' component={HomePage} />
           <Route path='/signin' component={props => <SignInForm signin={signin} {...props} />} />
-          <Route path='/welcome' component={props => <Welcome username={username} {...props} />} />
+          <Route exact path='/welcome' component={props => <Welcome username={username} {...props} />} />
+          <Route exact path='/planet' component={Planet} />
           <Route component={() => <h1>Page not found.</h1>} />
         </Switch>
       </div>
