@@ -27,24 +27,24 @@ class Signup extends Component {
   };
 
   handleSubmit = event => {
-    event.preventDefault();
+    event.preventDefault()
     signup(this.state.username, this.state.password)
       .then(userData => {
-        console.log("signup then:", userData);
+        console.log("signup then:", userData)
 
         if (userData.error) {
           alert(userData.error);
-          this.props.history.push("/signup");
+          this.props.history.push("/signup")
         } else {
           this.props.signin(userData);
-          this.props.history.push("/welcome");
+          this.props.history.push("/welcome")
         }
       })
       .catch(err => {
-        this.props.history.push("/signup");
-        console.log("signup catch:", err);
-      });
-  };
+        this.props.history.push("/signup")
+        console.log("signup catch:", err)
+      })
+  }
 
   render() {
     return (

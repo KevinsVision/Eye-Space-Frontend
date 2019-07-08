@@ -37,6 +37,10 @@ const styles = theme => ({
   card: {
     maxWidth: 400
   },
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
+  },
   actions: {
     display: 'flex'
   },
@@ -71,18 +75,8 @@ class UserPlanet extends React.Component {
       )
       this.setState({planets})
   }
-
-  // up = () => {
-  //   if(this.props.planet.likes < 1) {
-  //       this.props.planet.likes =+ 1
-  //   }
-  // }
   
 updateTheLikes = (planet) => {
-  //  debugger
-    // pwhv = []
-    // pwhv.push(this.props.username)
-    // pwhv.include(this.props.username) ? 
     const likes = planet.likes += 1
   
   return fetch(`http://localhost:3000/planets/${planet.id}`, {
@@ -105,6 +99,7 @@ addLikes = () => {
 
 componentDidMount () {
   this.addLikes()
+
 }
 
 handleExpandClick = () => {
@@ -174,8 +169,8 @@ handleExpandClick = () => {
   
       <CardMedia
         className={classes.media}
-        image="./images/earthLogo.gif"
-        title="Paella dish"
+        image={planet.first}
+        title="Planet Image"
       />
 
         <CardActions className={classes.actions} disableActionSpacing>
@@ -186,6 +181,9 @@ handleExpandClick = () => {
             <ShareIcon />
           </IconButton> 
           Save */}
+          <Button variant="contained" color="primary" href="#contained-buttons" className={classes.button}>
+        More Info
+      </Button>
           <IconButton
             className={classnames(classes.expand, {
               [classes.expandOpen]: this.state.expanded
@@ -195,19 +193,19 @@ handleExpandClick = () => {
             aria-label='Show more'
           >
             <ExpandMoreIcon />
-          </IconButton>Show Less
+          </IconButton>
         </CardActions>
         <Collapse in={this.state.expanded} timeout='auto' unmountOnExit>
           <CardContent>
             <Typography paragraph variant='body2'>
             <ul>
-              <li>Diameter: {planet.diameter} KM</li>
-              <li>Mass: {planet.mass} Earths</li>
-              <li>Orbital Period: {planet.orbital_period} Days</li>
-              <li>Day Length: {planet.day_length} Hours</li>
-              <li>Sun Distance: {planet.sun_distance} Million KM</li>
-              <li>Surface Temperature: {planet.temperature} ℃</li>
-              <li>Moons: {planet.moons}</li>
+              <li>Earth like-size Diameter: {planet.diameter} KM</li>
+              <li>Earth like-mass: {planet.mass} Earths</li>
+              <li>Earth like-orbit: {planet.orbital_period} Days</li>
+              <li>Earth like-days: {planet.day_length} Hours</li>
+              <li>Distance from Earth: {planet.sun_distance} Million KM</li>
+              <li>Average Temperature: {planet.temperature} ℃</li>
+              
             </ul>
               <br />
               <h2>The More Votes You Give, The Greater The Chances Are!</h2>
