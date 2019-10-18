@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-class Planet extends React.Component {
+class Planet extends Component {
 
   state = { 
     
@@ -11,14 +11,13 @@ class Planet extends React.Component {
     const { planet } = this.props
 
     return (
-      <div>
+      <div className='user-list'>
         {/* <img src={planet.first} /> */}
-        <h1>{planet.name}</h1>
+        {/* <h1>{planet.name}</h1> */}
         <h1>Hello</h1>
       </div>
     )
   }
-
 
 }
 

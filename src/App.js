@@ -55,8 +55,8 @@ class App extends Component {
           <Route exact path='/' component={HomePage} />
           <Route path='/signin' component={props => <SignInForm signin={signin} {...props} />} />
           <Route exact path='/welcome' component={props => <Welcome username={username} {...props} />} />
-          <Route exact path='/planet' component={Planet} />
-          <Route component={() => <h1>Page not found.</h1>} />
+          <Route exact path={'/welcome/planet'} component={Planet} />
+          <Route component={() => <h1 className='user-list'>Page not found.</h1>} />
         </Switch>
       </div>
     )

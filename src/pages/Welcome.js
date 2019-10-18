@@ -1,6 +1,8 @@
 import React from 'react'
 import { Route, Switch, withRouter } from 'react-router-dom'
 
+import Grid from '@material-ui/core/Grid';
+
 // Components
 import UserPlanet from '../components/userPlanet'
 import Planet from './Planet'
@@ -13,6 +15,7 @@ import { createUserPlanet }  from '../services/api'
 
 
 import Button from '@material-ui/core/Button'
+
 
 
 class Welcome extends React.Component {
@@ -110,7 +113,10 @@ class Welcome extends React.Component {
     return (
       <div style={this.style} className='user-list'>
         {/* <iframe src="https://solarsystem.nasa.gov/gltf_embed/2375" width="50%" height="450px" frameborder="0" /> */}
-        <h3>Here's all the planets in our Solar System:</h3>
+        <h3>All the planets we've discovered so far:</h3>
+
+
+
         <strong>Sort by:</strong>
       <label>
         <input type="radio" value="Likes" name="sortRadio" onChange={(e) => { this.sortPlanets(e.target.value)}}/>
@@ -122,11 +128,11 @@ class Welcome extends React.Component {
       </label>
       <label>
         <input type="radio" value="Distance" name="sortRadio" onChange={(e) => { this.sortPlanets(e.target.value)}}/>
-        Distance from Sun
+        Distance from Earth
       </label>
       
         <h3>Planet type</h3>
-        
+      
           <select onChange={this.changeFilter} name="type" id="type">
             <option value="all">All</option>
             <option value="Rocky">Rocky</option>
@@ -138,13 +144,24 @@ class Welcome extends React.Component {
         </div>
       
         { planets.length === 0 && <p>Sorry, you don't have any planet.</p>}
+        <Grid container justify="center" >
         {
           planets.map(planet =>
+            <Grid key={planet.id} item>
             <UserPlanet key={planet.id} planet={planet} handleSort={this.sortPlanets} userPlanet={userPlanet} changeFilter={changeFilter}/>
+            </Grid>
           )
         }
-        <Route exact path="/planet" component={ <Planet />}/>
-        <Route exact path="/exoplanet" component={props => <Exoplanet />}/>
+        </Grid>
+
+{/* <Grid container justify="center" spacing={spacing}>
+          {[0, 1, 2].map(value => (
+            <Grid key={value} item>
+              <Paper className={classes.paper} />
+            </Grid> */}
+        <Route path={`${this.props.match.path}/planet`} component={ <Planet planet={this.props.planet} />}/>
+        {/* <Route exact path="/planet" component={ <Planet />}/>
+        <Route exact path="/exoplanet" component={props => <Exoplanet />}/> */}
       </div>
     )
   }

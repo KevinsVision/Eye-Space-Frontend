@@ -1,6 +1,7 @@
 const baseUrl = 'http://localhost:3000'
 const signinUrl = baseUrl + '/signin'
 const signupUrl = baseUrl + '/signup'
+const allRenamedPlanetsUrl = baseUrl + '/rename_planets'
 const newUserPlanetURL = baseUrl + '/user_planets'
 
 export function signin (username, password) {
@@ -39,6 +40,20 @@ export function getAllPlanets () {
 
 export function createUserPlanet( planetId ) {
     return fetch(newUserPlanetURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", 'Authorization': localStorage.token },
+        body: JSON.stringify({ planetId })
+    }).then(resp => resp.json())
+}
+
+export function getAllRenamedPlanets () {
+    return fetch(allRenamedPlanetsUrl, {
+        headers: { 'Authorization': localStorage.token }
+    }).then(resp => resp.json())
+}
+
+export function createRenamedPlanet( planetId ) {
+    return fetch(allRenamedPlanetsUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json", 'Authorization': localStorage.token },
         body: JSON.stringify({ planetId })

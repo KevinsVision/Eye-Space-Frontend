@@ -25,6 +25,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import Grid from '@material-ui/core/Grid';
 
 import CardMedia from '@material-ui/core/CardMedia';
 
@@ -42,11 +43,11 @@ import { Link } from 'react-router-dom'
 
 const styles = theme => ({
   card: {
-    maxWidth: 400
+    maxWidth: 550
   },
   media: {
     height: 0,
-    paddingTop: '56.25%', // 16:9
+    paddingTop: '50%', // 16:9
   },
   actions: {
     display: 'flex'
@@ -66,21 +67,18 @@ const styles = theme => ({
   },
   avatar: {
     backgroundColor: red[500]
+  },
+
+  control: {
+    padding: theme.spacing(2),
   }
+  
 })
 
 class UserPlanet extends React.Component {
   state = { 
     expanded: true,
     planets: []
-  }
-
-  adoptPlanet = planetId => {
-    const planets = this.state.planets.map(planet => planet.id === planetId
-      ? {...planet, isAdopted: true}
-      : planet
-      )
-      this.setState({planets})
   }
   
 updateTheLikes = (planet) => {
@@ -119,77 +117,25 @@ handleExpandClick = () => {
     const { adoptPlanet } = this
 
     return (
-      
-      // <FormControl component="fieldset" className={classes.formControl}>
 
-      //   <FormLabel component="legend">Sort Planets By</FormLabel>
-      //     <RadioGroup
-      //       aria-label="planets"
-            
-      //       className={classes.group}
-      //       value="Alphabetically"
-      //       onChange={(e) => { handleSort(e.target.value)}}
-      //     >
-      //         <FormControlLabel
-      //           value="Alphabetically"
-      //           name="sortRadio"
-      //           control={<Radio color="primary" />}
-      //           label="Name"
-      //           labelPlacement="start"
-      //         />
-      //         <FormControlLabel
-      //           value="Distance"
-      //           name="sortRadio"
-      //           control={<Radio color="primary" />}
-      //           label="Distance"
-      //           labelPlacement="start"
-      //         />
-      //     </RadioGroup>
-      
+
       <Card style={{margin: '10px'}} className={classes.card}>
-        <CardHeader
+        <CardHeader className="card-header"
           avatar={
             <Avatar aria-label='Recipe' className={classes.avatar}>
               { planets.likes }
             </Avatar>
           }
-
-
-//           id:
-//           1
-//           planet_id:
-//           4
-//           updated_at:
-//           "2019-07-01T19:31:05.972Z"
-//           user_id:
-//           1
-
-
-          // action={
-          //   <IconButton>
-          //     <MoreVertIcon />
-          //   </IconButton>
-          // }
           title={planet.name}
-          subheader='July 8, 2019'
-        />
-  
+          subheader='July 9, 2019'
+        />  
       <CardMedia
         className={classes.media}
         image={planet.first}
         title="Planet Image"
       />
-
-        <CardActions className={classes.actions} disableActionSpacing>
-          {/* <IconButton aria-label='Add to favorites'>
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton aria-label='Share'>
-            <ShareIcon />
-          </IconButton> 
-          Save */}
-          {/* <Link to='/signin'>Signin</Link> */}
-          <Link to={`/planet/${planet.id}`} planet={planet => <Planet {...planet}/>}>
+        <CardActions className={classes.actions} disableActionSpacing>    
+          <Link to={`/welcome/planet/${planet.id}`} target="_blank" component={ <Planet planet={planet} />}>
             <Button variant="contained" color="primary" planet={planet => <Planet {...planet}/>} className={classes.button}>
               More Info
             </Button>
@@ -208,37 +154,28 @@ handleExpandClick = () => {
         <Collapse in={this.state.expanded} timeout='auto' unmountOnExit>
           <CardContent>
             <Typography paragraph variant='body2'>
-            <ul>
-              <li>Earth like-size Diameter: {planet.diameter} KM</li>
-              <li>Earth like-mass: {planet.mass} Earths</li>
-              <li>Earth like-orbit: {planet.orbital_period} Days</li>
-              <li>Earth like-days: {planet.day_length} Hours</li>
-              <li>Distance from Earth: {planet.sun_distance} Million KM</li>
-              <li>Average Temperature: {planet.temperature} ℃</li>
-              
+            <ul> 
+              <ul className="outer-stats">
+                <ul className="stats">
+                  <li className="inner-stats">Earth like-size Diameter: {planet.diameter} KM</li>
+                  <li className="inner-stats">Earth like-mass: {planet.mass} Earths</li>
+                  <li className="inner-stats">Earth like-orbit: {planet.orbital_period} Days</li>
+                  <li className="inner-stats">Earth like-days: {planet.day_length} Hours</li>
+                  <li className="inner-stats">Distance from Earth: {planet.sun_distance} Light Years Away</li>
+                  <li className="inner-stats">Average Temperature: {planet.temperature} ℃</li>
+                </ul>
+              </ul>
             </ul>
               <br />
-              <h2>The More Votes You Give, The Greater The Chances Are!</h2>
+                <h2>The More Likes You Give, The Greater The Chances Are of Going!</h2>
               <Button onClick={this.addLikes}> Vote 👍🏻 </Button>
-              {/* <div className="extra content">
-          {
-            planet.isAdopted
-              ? <button className="ui disabled button">Already adopted</button>
-              : <button onClick={() => adoptPlanet(planet.id)} className="ui primary button">Adopt pet</button>
-          }
-        </div> */}
             </Typography>
           </CardContent>
         </Collapse>
-        <Route exact path="/planet" planet={planet => <Planet {...planet}/>}/>
       </Card>
-      // </FormControl>
-      
-    )
-    
+    )    
   }
 }
-
 UserPlanet.propTypes = {
   classes: PropTypes.object.isRequired
 }
